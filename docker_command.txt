@@ -1,0 +1,12 @@
+// Start Kafka broker
+docker-compose -f docker-compose.yml --env-file environment.env up -d
+
+//create topic -> /bin
+./kafka-topics.sh --create --topic test-topic --bootstrap-server localhost:9092
+
+//check the created topic
+ ./kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic product-created-event-topic
+
+
+//Check the pushed message to the producer topic
+./kafka-console-consumer.sh --topic product-created-event-topic --bootstrap-server localhost:9092 --property print.key=true --property print.value=true --property print.timestamp=true --from-beginning
